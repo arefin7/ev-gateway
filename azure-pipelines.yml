@@ -1,0 +1,27 @@
+---
+trigger:
+  branches:
+    include:
+      - main
+pr:
+  branches:
+    include:
+      - main
+pool:
+  vmImages: 'ubuntu-latest'
+
+steps:
+  - task: DockerInstaller@0
+    displayName: Install docker
+
+  - scripts: |
+      docker ----version
+    displayName: verify Docker
+
+  - scripts: |
+      docker build -t gateway-core ./gateway-core
+    displayName: Build gateway-core
+
+  - scripts: |
+      docker build -t edge-client ./edge-client
+    displayName: Build edge-client
