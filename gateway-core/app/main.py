@@ -1,11 +1,12 @@
 from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from sqlalchemy.exc import OperationalError
-from database import engine, SessionLocal, Base
-from models import MeterReadingDB
+from app.database import engine, SessionLocal, Base
+from app.models.meter_reading import MeterReadingDB
 from typing import List
 from sqlalchemy import text
 from sqlalchemy.orm import Session
+from datetime import datetime
 import time
 
 app = FastAPI()
@@ -13,7 +14,7 @@ app = FastAPI()
 
 class MeterReading(BaseModel):
     charger_ip: str
-    timestamp: str
+    timestamp: datetime
     energy_kwh: float
 
 def get_db():
